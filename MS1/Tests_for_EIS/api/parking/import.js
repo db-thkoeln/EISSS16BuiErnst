@@ -1,10 +1,9 @@
 function register(app, db) {
-	app.post("/parking", require("./post-parking")(app, db));
-	app.get("/parking/:id", require("./get-parking")(app, db));
-	app.put("/parking/:id", require("./change-parking")(app, db));
-	app.delete("/parking/:id", require("./delete-parking")(app, db));
-	app.get("/parking", require("./get-all-parking")(app, db));
-	app.get("/search/:term", require("./get-parking-search")(app, db));
+	app.post("/plant", require("./post-plant")(app, db));
+	app.get("/plant/:id", require("./get-plant")(app, db));
+	app.put("/plant/:id", require("./change-plant")(app, db));
+	app.delete("/plant/:id", require("./delete-plant")(app, db));
+	app.get("/plant", require("./get-all-plant")(app, db));
 }
 module.exports = {
 	register: register
