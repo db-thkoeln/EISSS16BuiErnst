@@ -51,9 +51,6 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
     List<Double> vorhersagenTemperaturen = new ArrayList<Double>();
     List<Double> vorhersagenFeuchtigkeiten = new ArrayList<Double>();
     List<Double> vorhersagenNiederschlag = new ArrayList<Double>();
-    double feuchtigkeitSum;
-    double temperaturSum;
-    double niederschlagSum;
 
     //Initialisieren der Textfelder und Button
     TextView nameText;
@@ -180,6 +177,32 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
                 public void onResponse(Response response) throws IOException {
                     respVorhersage = response.body().string();
                     try {
+
+                        /*
+                        "list" : [ {    "clouds" : { "all" : 68 },
+                                        "dt" : 1462114800,
+                                        "dt_txt" : "2016-05-01 15:00:00",
+                                        "main" : {          "grnd_level" : 999.67999999999995,
+                                                            "humidity" : 95,
+                                                            "pressure" : 999.67999999999995,
+                                                            "sea_level" : 1037.6300000000001,
+                                                            "temp" : 10.779999999999999,
+                                                            "temp_kf" : 0,
+                                                            "temp_max" : 10.779999999999999,
+                                                            "temp_min" : 10.77
+                                                    },
+                                        "rain" : { "3h" : 0.0025000000000000001 },
+                                        "sys" : { "pod" : "d" },
+                                        "weather" : [ {     "description" : "light rain",
+                                                            "icon" : "10d",
+                                                            "id" : 500,
+                                                            "main" : "Rain"
+                                                       } ],
+                                        "wind" : {          "deg" : 8.5031099999999995,
+                                                            "speed" : 5.5599999999999996
+                                          }
+                                        },
+                         */
                         //converting to an Object
                         //Iterate through the JSON-response to get the Data
                         JSONObject jsonObjectVorhersagen = new JSONObject(respVorhersage);
@@ -220,20 +243,12 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private void setupInformation() {
-        nameText.setText("Name: "+ name );
-        wasserText.setText("Wasser: " + wasser + "%");
-        lichtText.setText("Licht: " + licht + "%");
-        temperaturText.setText("Temperatur: " + temperatur + " Grad");
-        duengungText.setText("Duengung: " + duengung + "%");
-
-        vorhersageFeuchtigkeit.setText("Feuchtigkeit: " + round(feuchtigkeitSum, 2) + "%");;
-        vorhersageTemp.setText("Temperaturen: " + round(temperaturSum, 2) + " Grad");
-        vorhersageRegen.setText("Niederschlag: " + round(niederschlagSum, 4) + " mm");
-    }
-
     @Override
     public void onClick(View v) {
+
+        double feuchtigkeitSum = 0;
+        double temperaturSum = 0;
+        double niederschlagSum = 0;
 
         //Prüfen ob die Temperatur für diese Pflanze ausreicht
         if(temp > (temperatur+5)){
@@ -257,7 +272,16 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         System.out.println("Temperaturen: " + temperaturSum);
         System.out.println("Niederschlag: " + niederschlagSum);
 
-        setupInformation();
+        nameText.setText("Name: "+ name );
+        wasserText.setText("Wasser: " + wasser + "%");
+        lichtText.setText("Licht: " + licht + "%");
+        temperaturText.setText("Temperatur: " + temperatur + " Grad");
+        duengungText.setText("Duengung: " + duengung + "%");
+
+        vorhersageFeuchtigkeit.setText("Feuchtigkeit: " + round(feuchtigkeitSum, 2) + "%");;
+        vorhersageTemp.setText("Temperaturen: " + round(temperaturSum, 2) + " Grad");
+        vorhersageRegen.setText("Niederschlag: " + round(niederschlagSum, 4) + " mm");
+
     }
 
     public double round(final double value, final int frac) {
