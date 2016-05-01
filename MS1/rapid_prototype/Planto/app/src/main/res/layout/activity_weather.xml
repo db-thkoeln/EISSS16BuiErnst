@@ -52,4 +52,39 @@
         android:id="@+id/checkAgain"
         android:layout_gravity="center_horizontal" />
 
+    <TextView
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/verhersageInfo"
+        android:text="Vorhersagen der nächsten 9h: " />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/vorhersageFeuchtigkeit"
+        android:text="Feuchtigkeit: " />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/vorhersageTemp"
+        android:text="Temperatur: " />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Niederschlag: "
+        android:id="@+id/vorhersageRegen" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/vorhersageAnweisung"
+        android:layout_gravity="center_horizontal" />
+
 </LinearLayout>

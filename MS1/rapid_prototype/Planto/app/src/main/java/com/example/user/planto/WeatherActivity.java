@@ -25,26 +25,37 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WeatherActivity extends AppCompatActivity implements View.OnClickListener {
 
-    OkHttp okHttp = new OkHttp();
-    OkHttp callServer = new OkHttp();
+    OkHttp callPlants = new OkHttp();
+    OkHttp callWeather = new OkHttp();
+    OkHttp callVorhersage = new OkHttp();
     String localurl;
-    String url;
     public String respWheather;
     public String respPlant;
+    public String respVorhersage;
+
+    //Initialisieren der Pflanzenvariablen
     public String name;
     public Integer wasser;
     public Integer licht;
     public Integer temperatur;
     public Integer duengung;
-    double minTemp;
-    double maxTemp;
+
     double temp;
 
-    InetAddress ip;
+    //Variablen der Vorhersage
+    List<Double> vorhersagenTemperaturen = new ArrayList<Double>();
+    List<Double> vorhersagenFeuchtigkeiten = new ArrayList<Double>();
+    List<Double> vorhersagenNiederschlag = new ArrayList<Double>();
+    double feuchtigkeitSum;
+    double temperaturSum;
+    double niederschlagSum;
 
+    //Initialisieren der Textfelder und Button
     TextView nameText;
     TextView wasserText;
     TextView lichtText;
@@ -53,8 +64,28 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
     TextView anweisung;
     Button checkButton;
 
-    String wheaterIP = "http://api.openweathermap.org/data/2.5/weather?lat=50.78&lon=7.28&APPID=ef953dab59421b03e9f978bb389bde56";
+    TextView verhersageInfo;
+    TextView vorhersageFeuchtigkeit;
+    TextView vorhersageTemp;
+    TextView vorhersageRegen;
+    TextView vorhersageAnweisung;
 
+    //Hier gibt die Wetter-API die Aktuellen Wetterbedingungen zurück.
+    /*Daten:
+    Datum in Unix-Zeitformat
+    Temperatur in Grad Celsius
+    Feuchtigkeit
+    */
+    String wheaterIP = "http://api.openweathermap.org/data/2.5/weather?lat=50.78&lon=7.28&APPID=ef953dab59421b03e9f978bb389bde56&units=metric";
+
+    //Hier gibt die Wetter-API eine Vorhersage der nächsten 5Tage in 3h-Schritten zurück.
+    /*Daten:
+    Datum in Unix-Zeitformat
+    Temperatur in Grad Celsius
+    Feuchtigkeit
+    durchschnittliche Niederschlagsmenge der letzten jeweils vorangegangenen 3h
+     */
+    String vorhersageIP ="http://api.openweathermap.org/data/2.5/forecast?q=hennef&appid=ef953dab59421b03e9f978bb389bde56&units=metric";
 
 
     @Override
@@ -62,6 +93,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
+        //Textfelder und Button zuordnen
         nameText = (TextView) findViewById(R.id.namePlant);
         wasserText = (TextView) findViewById(R.id.wasserText);
         lichtText = (TextView) findViewById(R.id.lichtText);
@@ -71,13 +103,19 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         checkButton = (Button) findViewById(R.id.checkAgain);
         checkButton.setOnClickListener(this);
 
+        verhersageInfo = (TextView) findViewById(R.id.verhersageInfo);
+        vorhersageFeuchtigkeit = (TextView) findViewById(R.id.vorhersageFeuchtigkeit);
+        vorhersageTemp = (TextView) findViewById(R.id.vorhersageTemp);
+        vorhersageRegen = (TextView) findViewById(R.id.vorhersageRegen);
+        vorhersageAnweisung = (TextView) findViewById(R.id.vorhersageAnweisung);
+
 
         //Es muss die lokale IP-Addresse angegeben werden
         localurl = "http://192.168.0.103:8888/plant/";
 
         try {
             // HTTP Get on Plant Ressource
-            Call get = callServer.doGetRequest(localurl , new Callback() {
+            Call get = callPlants.doGetRequest(localurl , new Callback() {
                 @Override
                 public void onFailure(Request request, IOException e) {
                 }
@@ -107,10 +145,9 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
             e.printStackTrace();
         }
 
-
         try {
             // HTTP Get on Wheater API Ressource
-            Call get = okHttp.doGetRequest(wheaterIP, new Callback() {
+            Call get = callWeather.doGetRequest(wheaterIP, new Callback() {
                 @Override
                 public void onFailure(Request request, IOException e) {
                 }
@@ -122,14 +159,56 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
                         //Iterate through the JSON-response to get the Data
                         JSONObject jsonObjectWheather = new JSONObject(respWheather);
                         JSONObject mainWeather = jsonObjectWheather.getJSONObject("main");
-                        minTemp = mainWeather.getDouble("temp_min");
-                        maxTemp = mainWeather.getDouble("temp_max");
                         temp = mainWeather.getDouble("temp");
 
-                        //Umrechnung von Kelvin in Grad Celsius
-                        minTemp = minTemp - 273.15;
-                        maxTemp = maxTemp - 273.15;
-                        temp = temp - 273.15;
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            // HTTP Get on Wheater API Ressource forecast
+            Call get = callVorhersage.doGetRequest(vorhersageIP, new Callback() {
+                @Override
+                public void onFailure(Request request, IOException e) {
+                }
+                @Override
+                public void onResponse(Response response) throws IOException {
+                    respVorhersage = response.body().string();
+                    try {
+                        //converting to an Object
+                        //Iterate through the JSON-response to get the Data
+                        JSONObject jsonObjectVorhersagen = new JSONObject(respVorhersage);
+                        JSONArray vorhersagen = jsonObjectVorhersagen.getJSONArray("list");
+                        for (int i = 0; i < 3; i++) {
+
+                            JSONObject obj = vorhersagen.getJSONObject(i);
+                            String date = obj.getString("dt_txt");
+                            System.out.println("Datum / Zeit: "+date);
+                            JSONObject rain = obj.getJSONObject("rain");
+                            Double vorhersagenRain;
+                            if (rain.has("3h")) {
+                                vorhersagenRain = rain.getDouble("3h");
+                            }
+                            else {
+                                vorhersagenRain = 0.00;
+                            }
+                            JSONObject mainVorhersagen = obj.getJSONObject("main");
+                            Double vorhersagenHumidity = mainVorhersagen.getDouble("humidity");
+                            Double vorhersagentemp = mainVorhersagen.getDouble("temp");
+                            vorhersagenFeuchtigkeiten.add(new Double(vorhersagenHumidity));
+                            vorhersagenTemperaturen.add(new Double(vorhersagentemp));
+                            vorhersagenNiederschlag.add(new Double(vorhersagenRain));
+                        }
+                        System.out.println(vorhersagenFeuchtigkeiten);
+                        System.out.println(vorhersagenTemperaturen);
+                        System.out.println(vorhersagenNiederschlag);
+                        System.out.println("Vorhersagen Angekommen!");
+
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -141,14 +220,20 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    private void setupInformation() {
+        nameText.setText("Name: "+ name );
+        wasserText.setText("Wasser: " + wasser + "%");
+        lichtText.setText("Licht: " + licht + "%");
+        temperaturText.setText("Temperatur: " + temperatur + " Grad");
+        duengungText.setText("Duengung: " + duengung + "%");
+
+        vorhersageFeuchtigkeit.setText("Feuchtigkeit: " + round(feuchtigkeitSum, 2) + "%");;
+        vorhersageTemp.setText("Temperaturen: " + round(temperaturSum, 2) + " Grad");
+        vorhersageRegen.setText("Niederschlag: " + round(niederschlagSum, 4) + " mm");
+    }
+
     @Override
     public void onClick(View v) {
-
-        nameText.setText("Name: "+ name );
-        wasserText.setText("Wasser: "+ wasser + "%");
-        lichtText.setText("Licht: "+ licht + "%");
-        temperaturText.setText("Temperatur: "+ temperatur + " Grad");
-        duengungText.setText("Duengung: "+ duengung + "%");
 
         //Prüfen ob die Temperatur für diese Pflanze ausreicht
         if(temp > (temperatur+5)){
@@ -157,5 +242,25 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         if(temp < (temperatur-5)){
             anweisung.setText("Bitte erhöhen Sie die Temperatur!");
         }
+
+        //Durchschnitt der nächsten 9h berechnen
+        for(int i = 0; i < vorhersagenFeuchtigkeiten.size(); i++){
+            feuchtigkeitSum += vorhersagenFeuchtigkeiten.get(i).doubleValue();
+            temperaturSum += vorhersagenTemperaturen.get(i).doubleValue();
+            niederschlagSum += vorhersagenNiederschlag.get(i).doubleValue();
+        }
+        feuchtigkeitSum = feuchtigkeitSum/3;
+        temperaturSum = temperaturSum/3;
+        niederschlagSum = niederschlagSum/3;
+
+        System.out.println("Humidity: " + feuchtigkeitSum);
+        System.out.println("Temperaturen: " + temperaturSum);
+        System.out.println("Niederschlag: " + niederschlagSum);
+
+        setupInformation();
+    }
+
+    public double round(final double value, final int frac) {
+        return Math.round(Math.pow(10.0, frac) * value) / Math.pow(10.0, frac);
     }
 }
