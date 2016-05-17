@@ -9,7 +9,9 @@ var db = redis.createClient();
 //	Use bodyParser
 app.use(jsonParser);
 //	//////////////////////////////////////////
-/* Register Parking API */
+/* Register Planto API */
 require("./api/plant/import").register(app, db);
+require("./api/tracker/import").register(app, db);
+require("./api/user/import").register(app, db);
 //	Server Port
 app.listen(8888);
