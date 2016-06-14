@@ -32,14 +32,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class PlantlistActivity extends Base_Activity {
-
+public class PlantlistActivity extends Base_Activity{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plantlist);
-
 
     }
 }
