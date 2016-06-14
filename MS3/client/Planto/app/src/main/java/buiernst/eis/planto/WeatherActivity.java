@@ -29,7 +29,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WeatherActivity extends AppCompatActivity implements View.OnClickListener {
+public class WeatherActivity extends Base_Activity implements View.OnClickListener {
 
     OkHttp callPlants = new OkHttp();
     OkHttp callWeather = new OkHttp();
@@ -109,7 +109,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
 
 
         //Es muss die lokale IP-Addresse angegeben werden
-        localurl = "http://192.168.0.103:8888/plant/";
+        localurl = "http://192.168.0.102:8888/plant/";
 
         try {
             // HTTP Get on Plant Ressource
