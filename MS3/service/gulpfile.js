@@ -45,7 +45,7 @@ gulp.task("db-dummy", function() {
 	} 
 	var newPlant2 = { 
 	"id": "2",	
-	"name": "Mimose", 
+	"name": "Mimosa pudica", 
  	"lichtstaerke": 40000, 
  	"temperatur": 15, 
  	"bodenfeuchtigkeit": 0.2, 

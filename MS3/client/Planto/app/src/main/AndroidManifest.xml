@@ -28,6 +28,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".PlantlistActivity" android:theme="@style/AppTheme" />
+        <activity android:name=".PlantDetailActivity" android:theme="@style/AppTheme" />
         <activity android:name=".WeatherActivity" android:theme="@style/AppTheme" />
 
     </application>

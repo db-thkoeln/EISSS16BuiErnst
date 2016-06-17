@@ -2,6 +2,7 @@ package buiernst.eis.planto;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -23,6 +24,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import butterknife.ButterKnife;
 
@@ -41,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     String nameString;
     String passwortString;
 
-    JSONObject jsonObjectPlant;
+    JSONObject jsonObjectUser;
     JSONArray jsonArray;
 
     @Override
@@ -53,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
         name = (EditText) findViewById(R.id.name);
         passwort = (EditText) findViewById(R.id.password);
         loginbtn = (Button) findViewById(R.id.loginbtn);
-
 
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,8 +71,6 @@ public class LoginActivity extends AppCompatActivity {
 
         nameString = name.getText().toString();
         passwortString = passwort.getText().toString();
-        System.out.println("Eingabe Name: " + nameString);
-        System.out.println("Eingabe PW: " + passwortString);
 
         try {
             // HTTP Get on User Ressource
@@ -84,20 +85,16 @@ public class LoginActivity extends AppCompatActivity {
                     try {
                         //converting to an Object
                         //Iterate through the JSON-response to get the Data
-                        jsonObjectPlant = new JSONObject(respUser);
-                        jsonArray = jsonObjectPlant.getJSONArray("user");
-                        System.out.println("USER: "+jsonArray);
+                        jsonObjectUser = new JSONObject(respUser);
+                        jsonArray = jsonObjectUser.getJSONArray("user");
                         for (int i = 0; i < jsonArray.length(); i++) {
 
                             JSONObject obj = jsonArray.getJSONObject(i);
                             userid = obj.getInt("id");
                             userName = obj.getString("name");
-                            System.out.println("Name: " + userName);
                             userPassword = obj.getString("passwort");
-                            System.out.println("PW: " + userPassword);
                             if(userName.equals(nameString) && userPassword.equals(passwortString)){
                                 startNextActivity();
-                                System.out.println("USER: " + obj);
                             }
                         }
 
