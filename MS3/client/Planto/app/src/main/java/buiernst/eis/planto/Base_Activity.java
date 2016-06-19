@@ -34,7 +34,7 @@ public class Base_Activity extends AppCompatActivity {
                 return true;
 
             case R.id.menu_weather:
-                Intent intentWeather = new Intent(Base_Activity.this, WeatherActivity.class);
+                Intent intentWeather = new Intent(Base_Activity.this, ForecastActivity.class);
                 intentWeather.putExtra("UserID", id);
                 startActivity(intentWeather);
                 return true;
