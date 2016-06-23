@@ -40,7 +40,7 @@ public class PlantDetailActivity extends Base_Activity{
     JSONObject jsonObjectPlant;
     JSONObject jsonObjectMyPlant;
     JSONArray jsonArrayMyPlant;
-    String ip = "192.168.0.102";
+    String ip = "192.168.1.7";
 
 
 

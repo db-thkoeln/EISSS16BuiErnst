@@ -109,7 +109,7 @@ public class WeatherActivity extends Base_Activity implements View.OnClickListen
 
 
         //Es muss die lokale IP-Addresse angegeben werden
-        localurl = "http://192.168.0.102:8888/plant/";
+        localurl = "http://192.168.1.7:8888/plant/";
 
         try {
             // HTTP Get on Plant Ressource

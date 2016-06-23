@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
 public class LoginActivity extends AppCompatActivity {
 
     OkHttp callUser = new OkHttp();
-    String userurl = "http://192.168.0.102:8888/user/";
+    String userurl = "http://192.168.1.7:8888/user/";
     Integer userid;
     String respUser;
     Button loginbtn;
