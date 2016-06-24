@@ -1,6 +1,7 @@
 package buiernst.eis.planto;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,8 +41,11 @@ public class PlantDetailActivity extends Base_Activity{
     JSONObject jsonObjectPlant;
     JSONObject jsonObjectMyPlant;
     JSONArray jsonArrayMyPlant;
-    String ip = "192.168.1.7";
-
+    String ip;
+    Integer id;
+    String plantName;
+    String plantID;
+    String measuredPlantID;
 
 
 
@@ -50,14 +54,23 @@ public class PlantDetailActivity extends Base_Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plantdetail);
 
-        Integer id= getIntent().getExtras().getInt("UserID");
-        String plantName = getIntent().getExtras().getString("Plantname");
+        id = getIntent().getExtras().getInt("UserID");
+        ip = getIntent().getExtras().getString("IP");
+
+        plantName = getIntent().getExtras().getString("Plantname");
+        plantID = getIntent().getExtras().getString("PlantID");
+        measuredPlantID = getIntent().getExtras().getString("MeasuredPlant");
+
 
         System.out.println(plantName);
+        System.out.println(plantID);
+        System.out.println(measuredPlantID);
 
         myplantUrl = "http://"+ip+":8888/user/"+id+"/measuredPlant/";
-    }
 
+        //new CallTask().execute();
+
+    }
 
 
 

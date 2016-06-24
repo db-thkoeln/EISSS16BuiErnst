@@ -34,16 +34,18 @@ import butterknife.ButterKnife;
 public class LoginActivity extends AppCompatActivity {
 
     OkHttp callUser = new OkHttp();
-    String userurl = "http://192.168.1.7:8888/user/";
+    String userurl;
     Integer userid;
     String respUser;
     Button loginbtn;
     EditText name;
     EditText passwort;
+    EditText iptext;
     String userName;
     String userPassword;
     String nameString;
     String passwortString;
+    String ip;
 
     JSONObject jsonObjectUser;
     JSONArray jsonArray;
@@ -57,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         name = (EditText) findViewById(R.id.name);
         passwort = (EditText) findViewById(R.id.password);
         loginbtn = (Button) findViewById(R.id.loginbtn);
-
+        iptext = (EditText) findViewById(R.id.ip_text);
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,6 +73,10 @@ public class LoginActivity extends AppCompatActivity {
 
         nameString = name.getText().toString();
         passwortString = passwort.getText().toString();
+
+        ip = iptext.getText().toString();
+
+        userurl = "http://"+ip+":8888/user/";
 
         try {
             // HTTP Get on User Ressource
@@ -111,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void startNextActivity() {
         Intent intent = new Intent(LoginActivity.this, PlantlistActivity.class);
+        intent.putExtra("IP", ip);
         intent.putExtra("UserID", userid);
         startActivity(intent);
     }

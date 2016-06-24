@@ -9,12 +9,14 @@ import android.view.MenuItem;
 public class Base_Activity extends AppCompatActivity {
 
     Integer id;
+    String ip;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.main_menu, menu);
 
         id= getIntent().getExtras().getInt("UserID");
-
+        ip= getIntent().getExtras().getString("IP");
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -24,18 +26,21 @@ public class Base_Activity extends AppCompatActivity {
             case R.id.menu_anweisung:
                 Intent intentTodo = new Intent(Base_Activity.this, PlantlistActivity.class);
                 intentTodo.putExtra("UserID", id);
+                intentTodo.putExtra("IP", ip);
                 startActivity(intentTodo);
                 return true;
 
             case R.id.menu_plantlist:
                 Intent intentPlant = new Intent(Base_Activity.this, PlantlistActivity.class);
                 intentPlant.putExtra("UserID", id);
+                intentPlant.putExtra("IP", ip);
                 startActivity(intentPlant);
                 return true;
 
             case R.id.menu_weather:
                 Intent intentWeather = new Intent(Base_Activity.this, ForecastActivity.class);
                 intentWeather.putExtra("UserID", id);
+                intentWeather.putExtra("IP", ip);
                 startActivity(intentWeather);
                 return true;
 

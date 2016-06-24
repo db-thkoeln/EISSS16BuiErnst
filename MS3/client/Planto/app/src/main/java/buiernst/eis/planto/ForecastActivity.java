@@ -38,11 +38,9 @@ public class ForecastActivity extends Base_Activity{
 
     OkHttp callPlants = new OkHttp();
     String weatherUrl;
-    String respWeather;
-    JSONObject jsonObjectWeather;
-    JSONArray jsonArrayWeather;
 
     Integer id;
+    String ip;
 
 
 
@@ -52,6 +50,7 @@ public class ForecastActivity extends Base_Activity{
         setContentView(R.layout.activity_forecast);
 
         id = getIntent().getExtras().getInt("UserID");
+        ip = getIntent().getExtras().getString("IP");
 
         weatherUrl = "http://api.openweathermap.org/data/2.5/forecast?q=hennef&appid=ef953dab59421b03e9f978bb389bde56&units=metric";
 
@@ -60,20 +59,15 @@ public class ForecastActivity extends Base_Activity{
 
         new CallTask().execute();
 
-
-
     }
 
-    private void populate() {
-        lv.setAdapter(listAdapter);
-    }
 
-    class CallTask extends AsyncTask<Void, String, JSONObject>{
+    class CallTask extends AsyncTask<Void, String, String>{
         String respWeather;
-        JSONObject jsonObjectWeather;
+        boolean arrived = false;
 
         @Override
-        protected JSONObject doInBackground(Void... params) {
+        protected String doInBackground(Void... params) {
             try {
                 // HTTP Get on Openweathermap Ressource
                 Call get = callPlants.doGetRequest(weatherUrl , new Callback() {
@@ -85,65 +79,65 @@ public class ForecastActivity extends Base_Activity{
                     public void onResponse(Response response) throws IOException {
                         respWeather = response.body().string();
                         System.out.println("respWeather: "+ respWeather);
-                        try {
-                            jsonObjectWeather = new JSONObject(respWeather);
-                            System.out.println("jsonObjectWeather: "+jsonObjectWeather);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        arrived = true;
                     }
                 });
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return jsonObjectWeather;
+            while(!arrived){
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            return respWeather;
         }
 
         @Override
-        protected void onPostExecute(JSONObject json) {
-
+        protected void onPostExecute(String resp) {
             try {
                 //converting to an Object
                 //Iterate through the JSON-response to get the Data
+                JSONObject jsonObjectWeather = new JSONObject(resp);
                 JSONArray jsonArrayWeather = jsonObjectWeather.getJSONArray("list");
                 for (int i = 0; i < 8; i++) {
 
                     JSONObject obj = jsonArrayWeather.getJSONObject(i);
                     String date = obj.getString("dt_txt");
-                    System.out.println("Date: "+date);
 
-                    JSONObject rain = obj.getJSONObject("rain");
+                    JSONObject rain;
                     Double niederschlag;
-                    if (rain.has("3h")) {
-                        niederschlag = rain.getDouble("3h");
+                    if(obj.has("rain")) {
+                        rain = obj.getJSONObject("rain");
+                        if (rain.has("3h")) {
+                            niederschlag = rain.getDouble("3h");
+                        }
+                        else {
+                            niederschlag = 0.00;
+                        }
                     }
-                    else {
+                    else{
                         niederschlag = 0.00;
                     }
-                    System.out.println("Niederschlag: "+niederschlag);
 
                     JSONArray weatherArray = obj.getJSONArray("weather");
                     JSONObject weather = weatherArray.getJSONObject(0);
                     String icon = weather.getString("icon");
-                    System.out.println("Icon: "+icon);
 
                     JSONObject temperatur = obj.getJSONObject("main");
                     Double tempMax = temperatur.getDouble("temp_max");
                     Double tempMin = temperatur.getDouble("temp_min");
-                    System.out.println("tempMax: "+tempMax+" tempMin: "+tempMin);
 
                     data.add(new WeatherData(icon, date, tempMax, tempMin, niederschlag));
-
                 }
-
-                //listAdapter.notifyDataSetChanged();
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            populate();
-
+            lv.setAdapter(listAdapter);
         }
     }
 

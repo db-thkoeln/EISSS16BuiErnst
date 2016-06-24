@@ -16,9 +16,7 @@ public class ForecastAdaptor extends ArrayAdapter<WeatherData>
     {
         Context context;
         int layoutResourceId;
-        static String datesort;
 
-        WeatherData currentMRB;
         Vector<WeatherData> data;
         /** Called when the activity is first created. */
         public ForecastAdaptor(ForecastActivity context, int layoutResourceId, Vector<WeatherData> data)

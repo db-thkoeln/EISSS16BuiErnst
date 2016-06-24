@@ -10,7 +10,7 @@
 
     <item android:id="@+id/menu_plantlist"
         android:title="Pflanzenliste"
-        android:icon="@drawable/ic_spa_white_24dp"
+        android:icon="@drawable/ic_leaf_white_24dp"
         android:orderInCategory="2"
         app:showAsAction="always"/>
 

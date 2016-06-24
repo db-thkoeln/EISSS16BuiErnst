@@ -25,14 +25,14 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Vector;
 
 
 public class PlantlistActivity extends Base_Activity{
 
 
-    private ArrayList<String> data = new ArrayList<>();
-    MyListAdapter listAdapter;
+    Vector<PlantData> data = new Vector<>();
+    Plantlistadaptor listAdapter;
 
     OkHttp callPlants = new OkHttp();
     String myplantUrl;
@@ -42,7 +42,7 @@ public class PlantlistActivity extends Base_Activity{
     JSONObject jsonObjectPlant;
     JSONObject jsonObjectMyPlant;
     JSONArray jsonArrayMyPlant;
-    String ip = "192.168.1.7";
+    String ip;
 
     Integer id;
 
@@ -54,20 +54,29 @@ public class PlantlistActivity extends Base_Activity{
         setContentView(R.layout.activity_plantlist);
 
         id = getIntent().getExtras().getInt("UserID");
+        ip = getIntent().getExtras().getString("IP");
 
         myplantUrl = "http://"+ip+":8888/user/"+id+"/measuredPlant/";
 
         ListView lv = (ListView) findViewById(R.id.listview);
-        listAdapter = new MyListAdapter(this, R.layout.list_item_plants, data);
+        listAdapter = new Plantlistadaptor(this, R.layout.list_item_plants, data);
+
         lv.setAdapter(listAdapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long vId) {
                 String title = (String) ((TextView) view.findViewById(R.id.list_item_text)).getText();
+                String plantid = (String)((TextView) view.findViewById(R.id.plantid)).getText();
+                String measuredId = (String)((TextView) view.findViewById(R.id.measuredplantid)).getText();
                 System.out.println(title);
+                System.out.println(plantid);
+                System.out.println(measuredId);
+
                 Intent intentPlantdetail = new Intent(PlantlistActivity.this, PlantDetailActivity.class);
                 intentPlantdetail.putExtra("UserID", id);
                 intentPlantdetail.putExtra("Plantname", title);
+                intentPlantdetail.putExtra("PlantID", plantid);
+                intentPlantdetail.putExtra("MeasuredPlant", measuredId);
                 startActivity(intentPlantdetail);
             }
         });
@@ -91,8 +100,9 @@ public class PlantlistActivity extends Base_Activity{
                         for (int i = 0; i < jsonArrayMyPlant.length(); i++) {
 
                             JSONObject obj = jsonArrayMyPlant.getJSONObject(i);
+                            String measuredplantid = obj.getString("id");
                             String plantid = obj.getString("plantid");
-                            addPlantName(plantid);
+                            addPlantName(plantid, measuredplantid);
                         }
 
                         listAdapter.notifyDataSetChanged();
@@ -109,7 +119,7 @@ public class PlantlistActivity extends Base_Activity{
     }
 
 
-    private void addPlantName(String id) {
+    private void addPlantName(final String id, final String mid) {
 
         plantUrl = "http://"+ip+":8888/plant/"+id;
 
@@ -128,7 +138,9 @@ public class PlantlistActivity extends Base_Activity{
                         //Iterate through the JSON-response to get the Data
                         jsonObjectPlant = new JSONObject(respPlant);
                         String plantName = jsonObjectPlant.getString("name");
-                        data.add(plantName);
+                        System.out.println("Plant: "+ plantName +" ID: "+id);
+                        data.add(new PlantData(plantName, id, mid));
+
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -140,52 +152,5 @@ public class PlantlistActivity extends Base_Activity{
         }
 
     }
-
-    private class MyListAdapter extends ArrayAdapter<String>{
-        private int layout;
-        private List<String> mObjects;
-        public MyListAdapter(Context context, int resource, List<String> objects) {
-            super(context, resource, objects);
-            mObjects = objects;
-            layout = resource;
-        }
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent){
-            ViewHolder mainViewholder;
-
-            if(convertView == null){
-                LayoutInflater inflater = LayoutInflater.from(getContext());
-                convertView = inflater.inflate(layout, parent, false);
-                final ViewHolder viewHolder = new ViewHolder();
-                viewHolder.title = (TextView) convertView.findViewById(R.id.list_item_text);
-                viewHolder.button = (ImageButton) convertView.findViewById(R.id.list_item_button);
-                viewHolder.title.setText(getItem(position));
-                /*viewHolder.button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String title = (String) ((TextView) v.findViewById(R.id.list_item_text)).getText();
-                        System.out.println(title);
-                        }
-                });*/
-                convertView.setTag(viewHolder);
-            }
-            else{
-                mainViewholder = (ViewHolder) convertView.getTag();
-                mainViewholder.title.setText(getItem(position));
-            }
-
-            return convertView;
-        }
-    }
-
-    public class ViewHolder{
-        TextView title;
-        ImageButton button;
-
-    }
-
-
-
 
 }

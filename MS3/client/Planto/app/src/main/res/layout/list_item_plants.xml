@@ -13,6 +13,24 @@
         android:layout_alignParentStart="true"
         android:layout_alignBottom="@+id/list_item_button" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:visibility="invisible"
+        android:text="New Text"
+        android:id="@+id/plantid"
+        android:layout_toEndOf="@id/list_item_text"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:visibility="invisible"
+        android:text="New Text"
+        android:id="@+id/measuredplantid"
+        android:layout_toEndOf="@id/plantid"/>
+
     <ImageButton
         android:id="@+id/list_item_button"
         android:layout_width="wrap_content"
