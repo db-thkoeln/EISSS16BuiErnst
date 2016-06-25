@@ -78,7 +78,6 @@ public class ForecastActivity extends Base_Activity{
                     @Override
                     public void onResponse(Response response) throws IOException {
                         respWeather = response.body().string();
-                        System.out.println("respWeather: "+ respWeather);
                         arrived = true;
                     }
                 });

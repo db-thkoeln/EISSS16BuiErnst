@@ -68,15 +68,13 @@ public class PlantlistActivity extends Base_Activity{
                 String title = (String) ((TextView) view.findViewById(R.id.list_item_text)).getText();
                 String plantid = (String)((TextView) view.findViewById(R.id.plantid)).getText();
                 String measuredId = (String)((TextView) view.findViewById(R.id.measuredplantid)).getText();
-                System.out.println(title);
-                System.out.println(plantid);
-                System.out.println(measuredId);
 
                 Intent intentPlantdetail = new Intent(PlantlistActivity.this, PlantDetailActivity.class);
                 intentPlantdetail.putExtra("UserID", id);
                 intentPlantdetail.putExtra("Plantname", title);
                 intentPlantdetail.putExtra("PlantID", plantid);
                 intentPlantdetail.putExtra("MeasuredPlant", measuredId);
+                intentPlantdetail.putExtra("IP", ip);
                 startActivity(intentPlantdetail);
             }
         });
@@ -138,7 +136,6 @@ public class PlantlistActivity extends Base_Activity{
                         //Iterate through the JSON-response to get the Data
                         jsonObjectPlant = new JSONObject(respPlant);
                         String plantName = jsonObjectPlant.getString("name");
-                        System.out.println("Plant: "+ plantName +" ID: "+id);
                         data.add(new PlantData(plantName, id, mid));
 
 
