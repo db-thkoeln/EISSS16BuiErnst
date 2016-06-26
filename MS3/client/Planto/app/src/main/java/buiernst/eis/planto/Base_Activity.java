@@ -24,7 +24,7 @@ public class Base_Activity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.menu_anweisung:
-                Intent intentTodo = new Intent(Base_Activity.this, PlantlistActivity.class);
+                Intent intentTodo = new Intent(Base_Activity.this, InstructionActivity.class);
                 intentTodo.putExtra("UserID", id);
                 intentTodo.putExtra("IP", ip);
                 startActivity(intentTodo);

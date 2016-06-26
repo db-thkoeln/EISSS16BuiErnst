@@ -168,64 +168,64 @@ gulp.task("db-dummy", function() {
 	var newMeasuredPlant1 = { 
 	"id": "1",	
 	"plantid": "1", 
- 	"lichtstaerke": 90000, 
+ 	"lichtstaerke": 20000, 
  	"temperatur": 30, 
  	"bodenfeuchtigkeit": 0.2, 
  	"duengung": { 
  				"kalium": 5, 
- 				"stickstoff": 8, 
- 				"phosphat": 7 
+ 				"stickstoff": 5, 
+ 				"phosphat": 5 
  				}, 
- 	"bodenwert": 7, 
- 	"stationid" : "2"
+ 	"bodenwert": 7.5, 
+ 	"stationid" : "5"
 	} 
 	var newMeasuredPlant2 = { 
 	"id": "2",	
 	"plantid": "2", 
- 	"lichtstaerke": 90000, 
- 	"temperatur": 30, 
- 	"bodenfeuchtigkeit": 0.2, 
+ 	"lichtstaerke": 40000, 
+ 	"temperatur": 8, 
+ 	"bodenfeuchtigkeit": 0, 
  	"duengung": { 
- 				"kalium": 20, 
- 				"stickstoff": 20, 
- 				"phosphat": 20 
+ 				"kalium": 11, 
+ 				"stickstoff": 15, 
+ 				"phosphat": 22 
  				}, 
  	"bodenwert": 7.5, 
- 	"stationid" : "1"
+ 	"stationid" : "2"
 	}
 	var newMeasuredPlant3 = { 
-	"id": "3",	
+	"id": "1",	
 	"plantid": "1", 
- 	"lichtstaerke": 90000, 
+ 	"lichtstaerke": 20000, 
  	"temperatur": 30, 
  	"bodenfeuchtigkeit": 0.2, 
  	"duengung": { 
  				"kalium": 5, 
- 				"stickstoff": 8, 
- 				"phosphat": 7 
+ 				"stickstoff": 5, 
+ 				"phosphat": 5 
  				}, 
- 	"bodenwert": 9, 
- 	"stationid" : "3"
+ 	"bodenwert": 7.5, 
+ 	"stationid" : "5"
 	} 
 	var newMeasuredPlant4 = { 
-	"id": "4",	
+	"id": "2",	
 	"plantid": "2", 
- 	"lichtstaerke": 90000, 
- 	"temperatur": 30, 
- 	"bodenfeuchtigkeit": 0.2, 
+ 	"lichtstaerke": 40000, 
+ 	"temperatur": 8, 
+ 	"bodenfeuchtigkeit": 0, 
  	"duengung": { 
- 				"kalium": 20, 
- 				"stickstoff": 20, 
- 				"phosphat": 20 
+ 				"kalium": 11, 
+ 				"stickstoff": 15, 
+ 				"phosphat": 22 
  				}, 
- 	"bodenwert": 9, 
- 	"stationid" : "4"
+ 	"bodenwert": 7.5, 
+ 	"stationid" : "2"
 	}
 	
    	db.set("uu:1:measuredPlant:1", JSON.stringify(newMeasuredPlant1)); 
 	db.set("uu:1:measuredPlant:2", JSON.stringify(newMeasuredPlant2)); 
-	db.set("uu:2:measuredPlant:3", JSON.stringify(newMeasuredPlant3)); 
-	db.set("uu:2:measuredPlant:4", JSON.stringify(newMeasuredPlant4)); 
+	db.set("uu:2:measuredPlant:1", JSON.stringify(newMeasuredPlant3)); 
+	db.set("uu:2:measuredPlant:2", JSON.stringify(newMeasuredPlant4)); 
 
  	
  }); 
