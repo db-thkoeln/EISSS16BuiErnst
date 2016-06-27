@@ -24,21 +24,27 @@ public class Base_Activity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.menu_anweisung:
+                // Intent on InstructionActivity
                 Intent intentTodo = new Intent(Base_Activity.this, InstructionActivity.class);
+                //Every Activity needs to know about the User-ID and the IP of the Server
                 intentTodo.putExtra("UserID", id);
                 intentTodo.putExtra("IP", ip);
                 startActivity(intentTodo);
                 return true;
 
             case R.id.menu_plantlist:
+                // Intent on PlantlistActivity
                 Intent intentPlant = new Intent(Base_Activity.this, PlantlistActivity.class);
+                //Every Activity needs to know about the User-ID and the IP of the Server
                 intentPlant.putExtra("UserID", id);
                 intentPlant.putExtra("IP", ip);
                 startActivity(intentPlant);
                 return true;
 
             case R.id.menu_weather:
+                // Intent on ForecastActivity
                 Intent intentWeather = new Intent(Base_Activity.this, ForecastActivity.class);
+                //Every Activity needs to know about the User-ID and the IP of the Server
                 intentWeather.putExtra("UserID", id);
                 intentWeather.putExtra("IP", ip);
                 startActivity(intentWeather);

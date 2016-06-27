@@ -33,8 +33,8 @@ gulp.task("db-dummy", function() {
 	"id": "1",	
 	"name": "Aloe Vera", 
  	"lichtstaerke": 20000, 
- 	"temperatur": 20, 
- 	"bodenfeuchtigkeit": 2, 
+ 	"temperatur": 17, 
+ 	"bodenfeuchtigkeit": 10, 
  	"duengung": { 
  				"kalium": 11, 
  				"stickstoff": 15, 
@@ -47,8 +47,8 @@ gulp.task("db-dummy", function() {
 	"id": "2",	
 	"name": "Mimosa pudica", 
  	"lichtstaerke": 40000, 
- 	"temperatur": 15, 
- 	"bodenfeuchtigkeit": 0.2, 
+ 	"temperatur": 30, 
+ 	"bodenfeuchtigkeit": 4, 
  	"duengung": { 
  				"kalium": 20, 
  				"stickstoff": 20, 
@@ -170,19 +170,19 @@ gulp.task("db-dummy", function() {
 	"plantid": "1", 
  	"lichtstaerke": 20000, 
  	"temperatur": 30, 
- 	"bodenfeuchtigkeit": 0.2, 
+ 	"bodenfeuchtigkeit": 3.2, 
  	"duengung": { 
  				"kalium": 5, 
  				"stickstoff": 5, 
  				"phosphat": 5 
  				}, 
  	"bodenwert": 7.5, 
- 	"stationid" : "5"
+ 	"stationid" : "2"
 	} 
 	var newMeasuredPlant2 = { 
 	"id": "2",	
 	"plantid": "2", 
- 	"lichtstaerke": 40000, 
+ 	"lichtstaerke": 60000, 
  	"temperatur": 8, 
  	"bodenfeuchtigkeit": 0, 
  	"duengung": { 
@@ -191,7 +191,7 @@ gulp.task("db-dummy", function() {
  				"phosphat": 22 
  				}, 
  	"bodenwert": 7.5, 
- 	"stationid" : "2"
+ 	"stationid" : "3"
 	}
 	var newMeasuredPlant3 = { 
 	"id": "1",	

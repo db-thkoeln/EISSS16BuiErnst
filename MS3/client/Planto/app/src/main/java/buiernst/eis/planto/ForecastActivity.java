@@ -36,7 +36,7 @@ public class ForecastActivity extends Base_Activity{
     ForecastAdaptor listAdapter;
     ListView lv;
 
-    OkHttp callPlants = new OkHttp();
+    OkHttp callWeather = new OkHttp();
     String weatherUrl;
 
     Integer id;
@@ -70,7 +70,7 @@ public class ForecastActivity extends Base_Activity{
         protected String doInBackground(Void... params) {
             try {
                 // HTTP Get on Openweathermap Ressource
-                Call get = callPlants.doGetRequest(weatherUrl , new Callback() {
+                Call get = callWeather.doGetRequest(weatherUrl , new Callback() {
                     @Override
                     public void onFailure(Request request, IOException e) {
                     }
@@ -101,6 +101,7 @@ public class ForecastActivity extends Base_Activity{
                 //Iterate through the JSON-response to get the Data
                 JSONObject jsonObjectWeather = new JSONObject(resp);
                 JSONArray jsonArrayWeather = jsonObjectWeather.getJSONArray("list");
+                //Get Data for 24 hours (3h steps)
                 for (int i = 0; i < 8; i++) {
 
                     JSONObject obj = jsonArrayWeather.getJSONObject(i);
@@ -129,6 +130,7 @@ public class ForecastActivity extends Base_Activity{
                     Double tempMax = temperatur.getDouble("temp_max");
                     Double tempMin = temperatur.getDouble("temp_min");
 
+                    //adding Data to the VectorList from WeatherData-Class
                     data.add(new WeatherData(icon, date, tempMax, tempMin, niederschlag));
                 }
 

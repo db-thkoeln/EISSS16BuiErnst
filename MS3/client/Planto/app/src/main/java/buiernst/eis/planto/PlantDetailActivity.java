@@ -83,6 +83,7 @@ public class PlantDetailActivity extends Base_Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plantdetail);
 
+        //Setting all Textviews to variables
         name = (TextView) findViewById(R.id.plant_detail_name);
         tempAktuell = (TextView) findViewById(R.id.textView1);
         tempBedarf = (TextView) findViewById(R.id.textView2);
@@ -104,10 +105,6 @@ public class PlantDetailActivity extends Base_Activity{
         plantID = getIntent().getExtras().getString("PlantID");
         measuredPlantID = getIntent().getExtras().getString("MeasuredPlant");
 
-
-        System.out.println(id);
-        System.out.println(ip);
-
         myplantUrl = "http://"+ip+":8888/user/"+id+"/measuredPlant/"+measuredPlantID;
         plantUrl = "http://"+ip+":8888/plant/"+plantID;
 
@@ -125,17 +122,11 @@ public class PlantDetailActivity extends Base_Activity{
                         //converting to an Object
                         //Iterate through the JSON-response to get the Data
                         jsonObjectMyPlant = new JSONObject(respMyPlant);
-                        System.out.println("MPlant: "+ jsonObjectMyPlant);
 
                         mLichtstaerke = jsonObjectMyPlant.getDouble("lichtstaerke");
                         mTemp = jsonObjectMyPlant.getDouble("temperatur");
                         mBodenfeuchtigkeit = jsonObjectMyPlant.getDouble("bodenfeuchtigkeit");
                         stationID = jsonObjectMyPlant.getString("stationid");
-
-                        System.out.println("mLichtstaerke: "+ mLichtstaerke);
-                        System.out.println("mTemp: "+ mTemp);
-                        System.out.println("mBodenfeuchtigkeit: "+ mBodenfeuchtigkeit);
-                        System.out.println("stationID: "+ stationID);
 
                         mPlantArrived = true;
 
@@ -151,6 +142,7 @@ public class PlantDetailActivity extends Base_Activity{
             e.printStackTrace();
         }
 
+        //waiting for response
         while(!plantArrived&&!stationArrived){
             try {
                 Thread.sleep(200);
@@ -187,17 +179,11 @@ public class PlantDetailActivity extends Base_Activity{
                         //converting to an Object
                         //Iterate through the JSON-response to get the Data
                         jsonObjectPlant = new JSONObject(respPlant);
-                        System.out.println("Plant: "+ jsonObjectPlant);
 
                         pLichtstaerke = jsonObjectPlant.getDouble("lichtstaerke");
                         pTemp = jsonObjectPlant.getDouble("temperatur");
                         pBodenfeuchtigkeit = jsonObjectPlant.getDouble("bodenfeuchtigkeit");
                         wachstumsphase = jsonObjectPlant.getString("wachstumsphase");
-
-                        System.out.println("pLichtstaerke: "+ pLichtstaerke);
-                        System.out.println("pTemp: "+ pTemp);
-                        System.out.println("pBodenfeuchtigkeit: "+ pBodenfeuchtigkeit);
-                        System.out.println("wachstumsphase: "+ wachstumsphase);
 
                         plantArrived = true;
 
@@ -211,6 +197,7 @@ public class PlantDetailActivity extends Base_Activity{
         }
     }
 
+    //getting Station features by StationID
     public void getStation(String stationID){
 
         stationUrl = "http://"+ip+":8888/station/"+stationID;
@@ -229,11 +216,8 @@ public class PlantDetailActivity extends Base_Activity{
                         //converting to an Object
                         //Iterate through the JSON-response to get the Data
                         jsonObjectStation = new JSONObject(respStation);
-                        System.out.println("Station: "+ jsonObjectStation);
 
                         station = jsonObjectStation.getString("features");
-
-                        System.out.println("Station: "+ station);
 
                         stationArrived = true;
 

@@ -116,6 +116,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void startNextActivity() {
+        //Every Activity needs to know the User-ID and the IP of the server
         Intent intent = new Intent(LoginActivity.this, PlantlistActivity.class);
         intent.putExtra("IP", ip);
         intent.putExtra("UserID", userid);

@@ -69,6 +69,7 @@ public class PlantlistActivity extends Base_Activity{
                 String plantid = (String)((TextView) view.findViewById(R.id.plantid)).getText();
                 String measuredId = (String)((TextView) view.findViewById(R.id.measuredplantid)).getText();
 
+                //PlantDetailActivity gets everything from Plant-ID MeasuredPlant-ID
                 Intent intentPlantdetail = new Intent(PlantlistActivity.this, PlantDetailActivity.class);
                 intentPlantdetail.putExtra("UserID", id);
                 intentPlantdetail.putExtra("Plantname", title);
@@ -136,6 +137,8 @@ public class PlantlistActivity extends Base_Activity{
                         //Iterate through the JSON-response to get the Data
                         jsonObjectPlant = new JSONObject(respPlant);
                         String plantName = jsonObjectPlant.getString("name");
+
+                        //Setting Name and IDs to the Listview-Elements
                         data.add(new PlantData(plantName, id, mid));
 
 

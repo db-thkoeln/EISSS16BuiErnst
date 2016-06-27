@@ -24,6 +24,7 @@ app.get('/waterneed/:uid/:id', function(req,res){
         var obj={};
         var obj2={};
 
+    	//Calculate Method
 		function calculateWaterNeed(a, b, c){
 		        if (a < b){
 		            c = b - a;
@@ -36,6 +37,7 @@ app.get('/waterneed/:uid/:id', function(req,res){
 		        }
 		}
 
+		//Get information from measuredPlant
         db.get('uu:'+req.params.uid+':measuredPlant:'+req.params.id, function(err, rep){
 			if(rep) {
                 //console.log(JSON.parse(rep));
@@ -43,6 +45,7 @@ app.get('/waterneed/:uid/:id', function(req,res){
                 mphu = obj.bodenfeuchtigkeit;
                 pid = obj.plantid;
 
+        	//Get information from Plant
 			db.get('plant:'+ pid, function(err, rep) {
 				if (rep) {
     	            obj2 = JSON.parse(rep);
@@ -58,6 +61,7 @@ app.get('/waterneed/:uid/:id', function(req,res){
 				var JSONresponse = JSON.stringify(Stringresponse);
 				console.log(JSONresponse);
 
+				//Sending response
         		res.type("json").send(JSONresponse);
 
 			});
@@ -71,5 +75,79 @@ app.get('/waterneed/:uid/:id', function(req,res){
 });
  
         
+//Calculate amount of needed fertilize (Server-Side)
+app.get('/fertilizeneed/:uid/:id', function(req,res){
+        var mFertilize;
+        var fertilize;
+        var mKalium;
+        var mStickstoff;
+        var mPhosphat;
+        var pKalium;
+        var pStickstoff;
+        var pPhosphat;
+        var kalium;
+        var stickstoff;
+        var phosphat;
+        var pid;
+        var obj={};
+        var obj2={};
+
+    	//Calculate Method
+		function calculateNeed(a, b, c){
+		        if (a < b){
+		            c = b - a;
+		            return c;  
+		        }
+		        else {
+		        	c = 0;
+		        	console.log('Keine Duengung noetig.')
+		            return c;
+		        }
+		}
+		//Get information from measuredPlant
+        db.get('uu:'+req.params.uid+':measuredPlant:'+req.params.id, function(err, rep){
+			if(rep) {
+                //console.log(JSON.parse(rep));
+                obj = JSON.parse(rep);
+                mFertilize = obj.duengung;
+                mKalium = mFertilize.kalium;
+                mStickstoff = mFertilize.stickstoff;
+                mPhosphat = mFertilize.phosphat;
+                pid = obj.plantid;
+
+        	//Get information from Plant
+			db.get('plant:'+ pid, function(err, rep) {
+				if (rep) {
+    	            obj2 = JSON.parse(rep);
+    	            fertilize = obj2.duengung;
+    	            pKalium = fertilize.kalium;
+                	pStickstoff = fertilize.stickstoff;
+                	pPhosphat = fertilize.phosphat;
+				}
+				else {
+					res.status(404).type("text").send("Die Pflanze mit der ID " + pid + " wurde nicht gefunden");
+				}
+
+				kalium = calculateNeed(mKalium, pKalium, kalium);
+				stickstoff = calculateNeed(mStickstoff, pStickstoff, stickstoff);
+				phosphat = calculateNeed(mPhosphat, pPhosphat, phosphat);
+
+				var Stringresponse = {'kaliumbedarf': kalium, 'stickstoffbedarf': stickstoff, 'phosphatbedarf': phosphat};
+				var JSONresponse = JSON.stringify(Stringresponse);
+
+				//Sending response
+        		res.type("json").send(JSONresponse);
+
+			});
+
+
+			}
+			else {
+				res.status(404).type('text').send('Die zugewiesene Pflanze mit der ID '+req.params.id+' wurde nicht gefunden');
+			}
+		});
+});
+
+
 //	Server Port
 app.listen(8888);

@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:text="Large Text"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/anweisung"
         android:layout_alignParentTop="true"
@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:text="New Text"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
         android:id="@+id/value"
         android:layout_below="@+id/plant"
         android:layout_alignStart="@id/anweisung" />
