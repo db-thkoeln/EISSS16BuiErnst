@@ -23,7 +23,7 @@ In dieser Phase wurde die essentielle Planungsarbeit durchgeführt. Dazu gehöre
 
 Hier befasste man sich mit der Konzeption. Es wurden 2 Iterationen durchgeführt. Zu den Artefakten gehören:
 
-# Usability Engineering:
+### Usability Engineering:
 - User Research & Modelling (Stakeholderanalyse, User Profiles, Personas)
 - Szenarien
 - Anforderungsermittlung (funktional, qualitativ, organisatorisch)
@@ -36,7 +36,7 @@ Hier befasste man sich mit der Konzeption. Es wurden 2 Iterationen durchgeführt
 - interactive Prototype mit [Proto.io](https://https://proto.io/) 
 - Evaluation - User Testing
 
-# Software Engineering:
+### Software Engineering:
 - Kommunikationsdiagramm
 - Architekturdiagramm (client-server)
 - RESTful Web Service
@@ -44,12 +44,17 @@ Hier befasste man sich mit der Konzeption. Es wurden 2 Iterationen durchgeführt
 
 ## Meilenstein 3 - Implementation
 
-Nach der Konzeption wurde anschließend der High-Fidelity-Prototyp entwickelt.  
+Nach der Konzeption wurde anschließend der High-Fidelity-Prototyp implementiert.
+
+### Server (node.js):
+- Anwendungslogik (Bedarfsberechnug der Nährstoffe)
+
+### Client (Android):
+- Interface
+- Wetter-API Integration
 
 
-
-
-Das Projekt wurde im Jahr 2016 als eins der besten zehn Projekte im 
+Das Projekt wurde im Jahr 2016 als eins der besten zehn Projekte im Studiengang Medieninformatik der TH Köln ausgezeichnet. 
 
 Presse:
 - [Innovativ, kreativ, multimedial](https://www.th-koeln.de/hochschule/innovativ-kreativ-multimedial_39798.php) 
