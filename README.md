@@ -55,7 +55,7 @@ Nach der Konzeption wurde anschließend der High-Fidelity-Prototyp implementiert
 
 --------------
 
-Das Projekt wurde im Jahr 2016 als eins der besten zehn Projekte im Studiengang Medieninformatik der TH Köln ausgezeichnet. 
+Das Projekt wurde im Jahr 2016 als eins der besten zehn Projekte im Studiengang Medieninformatik in der TH Köln ausgezeichnet. 
 
 Presse:
 - [Innovativ, kreativ, multimedial](https://www.th-koeln.de/hochschule/innovativ-kreativ-multimedial_39798.php) 
