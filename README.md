@@ -53,6 +53,7 @@ Nach der Konzeption wurde anschließend der High-Fidelity-Prototyp implementiert
 - Interface
 - Wetter-API Integration
 
+/
 
 Das Projekt wurde im Jahr 2016 als eins der besten zehn Projekte im Studiengang Medieninformatik der TH Köln ausgezeichnet. 
 
