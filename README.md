@@ -33,7 +33,7 @@ Hier befasste man sich mit der Konzeption. Es wurden 2 Iterationen durchgeführt
 - Evaluation - Cognitive Walkthrough
 
 2. Iteration
-- interactive Prototype mit [Proto.io](https://https://proto.io/) 
+- interactive Prototype mit [Proto.io](https://proto.io/) 
 - Evaluation - User Testing
 
 ### Software Engineering:
