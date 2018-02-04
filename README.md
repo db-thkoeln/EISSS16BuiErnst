@@ -63,9 +63,8 @@ Presse:
 - [TH Köln Medieninformatiker stellen im Showcase ihre Ideen vor](http://www.rundschau-online.de/region/oberberg/gummersbach/th-koeln-medieninformatiker-stellen-im-showcase-ihre-ideen-vor-25241120) 
 
 
-
 --------------
-
+--------------
 
 
 ### ENGLISH VERSION
