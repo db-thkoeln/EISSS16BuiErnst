@@ -90,7 +90,7 @@ In this phase we went through essential planning. This included:
 
 ## Milestone 2 - Concept
 
-Hier befasste man sich mit der Konzeption. Es wurden 2 Iterationen durchgeführt. Zu den Artefakten gehören:
+Two iterations were executed in this conception phase:
 
 ### Usability Engineering:
 - user research & modelling (stakeholder analysis, user profiles, personas)
