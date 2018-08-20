@@ -71,9 +71,7 @@ Presse:
 ### ENGLISH VERSION
 
 In the module "Development Project: Interactive Systems" we had the opportunity to merge the knowledge from the fields of 
-"Human-Computer-Interaction" and "Web-based Applications 2: Distributed Systems" and we have put them into practice. This project "Planto" was developed by [Duc Bui](https://github.com/db2pro) and [Markus Ernst](https://github.com/markusernst) in period of 3 months. DB focused upon the Usability Engineering and ME looked after the Software Engineering.
-
-This README is a short summary. A detailed documentation is located in /MS2. 
+"Human-Computer-Interaction" and "Web-based Applications 2: Distributed Systems" and we have put them into practice. This project "Planto" was developed by [Duc Bui](https://github.com/db2pro) and [Markus Ernst](https://github.com/markusernst) in period of 3 months. DB focused upon the Usability Engineering and ME was looking after the Software Engineering.
 
 
 ## Milestone 1 - Planning & Rapid Prototype
